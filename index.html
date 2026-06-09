@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="YL Developers builds premium business websites in Bengaluru. Transparent pricing from Rs. 8,000 to Rs. 15,000. Direct owner support.">
+<title>YL Developers | We Build Websites That Win Trust</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --yl-dark:#0a0a0f;--yl-surface:#111118;--yl-card:#16161f;
+  --yl-border:rgba(255,255,255,0.08);--yl-border-hover:rgba(255,255,255,0.18);
+  --yl-accent:#4f8ef7;--yl-text:#f0f0f5;--yl-muted:#8888a0;--muted-bg:rgba(255,255,255,0.04);
+}
+html{scroll-behavior:smooth}
+body{background:var(--yl-dark);color:var(--yl-text);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* CURSOR — z-index above everything including modal */
+#cursor-dot{position:fixed;width:8px;height:8px;border-radius:50%;background:#fff;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:transform 0.1s ease,opacity 0.3s;mix-blend-mode:difference}
+#cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%)}
+@media(pointer:coarse){#cursor-dot,#cursor-glow{display:none}body{cursor:auto}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,0.85);backdrop-filter:blur(14px);border-bottom:0.5px solid var(--yl-border)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--yl-text);text-decoration:none;letter-spacing:0.04em}
+.nav-logo span{color:var(--yl-accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--yl-muted);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--yl-text)}
+.nav-cta{background:var(--yl-accent);color:#fff;border:none;padding:0.5rem 1.2rem;border-radius:6px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:none;transition:opacity 0.2s;text-decoration:none}
+.nav-cta:hover{opacity:0.85}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 2rem;background:#000000f5;position:relative;overflow:hidden}
+.hero-spotlight{position:absolute;top:-10rem;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero-card{width:100%;max-width:1100px;height:520px;background:#000000f5;border:0.5px solid var(--yl-border);border-radius:16px;position:relative;overflow:hidden;display:flex;z-index:1}
+.hero-left{flex:1;padding:2.5rem;position:relative;z-index:10;display:flex;flex-direction:column;justify-content:center}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(79,142,247,0.1);border:0.5px solid rgba(79,142,247,0.3);border-radius:100px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:500;color:var(--yl-accent);margin-bottom:1.5rem}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--yl-accent);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:800;line-height:1.1;margin-bottom:1.2rem;letter-spacing:-0.02em;background:linear-gradient(to bottom,#f5f5f5,#a3a3a3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:0.95rem;color:#d4d4d4;line-height:1.7;margin-bottom:2rem;font-weight:300;max-width:340px}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--yl-accent);color:#fff;border:none;padding:0.7rem 1.4rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.88rem;cursor:none;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--yl-text);border:0.5px solid var(--yl-border-hover);padding:0.7rem 1.4rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.88rem;cursor:none;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem}
+.btn-ghost:hover{border-color:var(--yl-accent);color:var(--yl-accent)}
+.hero-stats{display:flex;gap:1.5rem;margin-top:2rem;flex-wrap:wrap}
+.stat-item{display:flex;flex-direction:column}
+.stat-num{font-family:'Syne',sans-serif;font-weight:700;font-size:1.3rem;color:#f5f5f5}
+.stat-label{font-size:0.72rem;color:var(--yl-muted);margin-top:0.1rem}
+
+/* SPLINE RIGHT PANEL */
+.hero-right{flex:1;position:relative;overflow:hidden}
+.hero-right spline-viewer{position:absolute;inset:0;width:100%;height:100%;border:none}
+.hero-right spline-viewer::part(logo){display:none!important;opacity:0!important;visibility:hidden!important}
+/* Full-bottom bar covers "Built with Spline" watermark completely */
+.spline-watermark-hider{position:absolute;bottom:0;left:0;right:0;height:52px;background:#000000f5;z-index:20;pointer-events:none}
+.spline-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--yl-muted);font-size:0.85rem;letter-spacing:0.06em;z-index:5}
+.loader-ring{width:32px;height:32px;border:2px solid rgba(79,142,247,0.2);border-top-color:var(--yl-accent);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* =====================================================
+   DISPLAY CARDS — auto-looping carousel
+   Same UI, JS cycles through 3 cards automatically
+   ===================================================== */
+.cards-section{padding:5rem 2rem;background:var(--yl-dark)}
+.cards-section-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.cards-section-text .section-tag{display:inline-block;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--yl-accent);margin-bottom:1rem}
+.cards-section-text h2{font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
+.cards-section-text p{color:var(--yl-muted);font-size:1rem;line-height:1.7;font-weight:300}
+
+/* Loop dots indicator */
+.cards-dots{display:flex;gap:6px;margin-top:1.5rem}
+.cards-dot{width:6px;height:6px;border-radius:50%;background:var(--yl-border-hover);transition:background 0.3s,transform 0.3s}
+.cards-dot.active{background:var(--yl-accent);transform:scale(1.3)}
+
+.display-cards-wrapper{
+  display:grid;grid-template-areas:'stack';place-items:center;
+  padding:3rem 2rem 5rem;width:100%;max-width:460px;margin:0 auto;
+}
+.dc{
+  grid-area:stack;position:relative;
+  width:22rem;height:9rem;border-radius:0.75rem;
+  border:2px solid var(--yl-border);background:var(--muted-bg);
+  backdrop-filter:blur(8px);padding:0.75rem 1rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  cursor:none;transition:all 0.7s ease;
+  transform:skewY(-8deg);overflow:visible;
+}
+.dc::after{content:'';position:absolute;right:-4px;top:-5%;height:110%;width:20rem;background:linear-gradient(to left,var(--yl-dark),transparent);pointer-events:none;border-radius:0 0.75rem 0.75rem 0}
+.dc>div{display:flex;align-items:center;gap:0.5rem}
+.dc-icon-wrap{position:relative;display:inline-flex;border-radius:9999px;background:#1e3a5f;padding:0.25rem}
+.dc-icon-wrap svg{width:16px;height:16px;stroke:var(--yl-accent);fill:none;stroke-width:1.8}
+.dc-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:500;color:var(--yl-accent)}
+.dc-desc{font-size:1.1rem;color:var(--yl-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc-date{font-size:0.9rem;color:var(--yl-muted)}
+
+/* Default stacked positions */
+.dc-1{z-index:3;filter:grayscale(0)}
+.dc-1::before{content:'';position:absolute;inset:0;border-radius:0.75rem;background:rgba(10,10,15,0.5);opacity:0;transition:opacity 0.7s;z-index:1;pointer-events:none}
+.dc-2{transform:skewY(-8deg) translateX(4rem) translateY(2.5rem);z-index:2;filter:grayscale(60%)}
+.dc-2::before{content:'';position:absolute;inset:0;border-radius:0.75rem;background:rgba(10,10,15,0.5);opacity:0.7;transition:opacity 0.7s;z-index:1;pointer-events:none}
+.dc-3{transform:skewY(-8deg) translateX(8rem) translateY(5rem);z-index:1;filter:grayscale(100%)}
+.dc-3::before{content:'';position:absolute;inset:0;border-radius:0.75rem;background:rgba(10,10,15,0.5);opacity:1;transition:opacity 0.7s;z-index:1;pointer-events:none}
+
+/* Loop animation states — JS adds these classes to cycle */
+/* state-0: card1=front, card2=mid, card3=back (default) */
+/* state-1: card2=front, card3=mid, card1=back */
+/* state-2: card3=front, card1=mid, card2=back */
+.state-front{transform:skewY(-8deg) translateY(-0.5rem)!important;z-index:3!important;filter:grayscale(0%)!important;border-color:rgba(79,142,247,0.35)!important}
+.state-front::before{opacity:0!important}
+.state-mid{transform:skewY(-8deg) translateX(4rem) translateY(2.5rem)!important;z-index:2!important;filter:grayscale(40%)!important}
+.state-mid::before{opacity:0.5!important}
+.state-back{transform:skewY(-8deg) translateX(8rem) translateY(5rem)!important;z-index:1!important;filter:grayscale(100%)!important}
+.state-back::before{opacity:1!important}
+
+/* SECTIONS */
+section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{display:inline-block;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--yl-accent);margin-bottom:1rem}
+.section-heading{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
+.section-sub{color:var(--yl-muted);font-size:1rem;line-height:1.7;max-width:520px;font-weight:300}
+.divider{width:100%;height:0.5px;background:var(--yl-border)}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:3rem;border:1.5px solid var(--yl-border);border-radius:16px;overflow:hidden}
+.service-card{background:var(--yl-surface);padding:2rem 1.8rem;transition:background 0.3s}
+.service-card:hover{background:var(--yl-card)}
+.service-num{font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--yl-muted);letter-spacing:0.12em;margin-bottom:1.2rem}
+.service-icon{width:40px;height:40px;border-radius:10px;background:rgba(79,142,247,0.1);border:0.5px solid rgba(79,142,247,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+.service-icon svg{width:20px;height:20px;stroke:var(--yl-accent);fill:none;stroke-width:1.6}
+.service-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:0.7rem}
+.service-desc{font-size:0.88rem;color:var(--yl-muted);line-height:1.65;font-weight:300}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;max-width:1000px}
+.price-card{border:0.5px solid var(--yl-border);border-radius:16px;padding:2rem;background:var(--yl-surface);transition:border-color 0.3s,transform 0.25s,box-shadow 0.25s;cursor:none}
+.price-card:hover{border-color:rgba(79,142,247,0.4);transform:translateY(-4px);box-shadow:0 12px 40px rgba(79,142,247,0.08)}
+.price-card.featured{border:1.5px solid var(--yl-accent);background:linear-gradient(135deg,rgba(79,142,247,0.06),var(--yl-surface))}
+.price-card.services-card{border:0.5px solid rgba(124,90,245,0.3);background:linear-gradient(135deg,rgba(124,90,245,0.05),var(--yl-surface))}
+.price-card.services-card:hover{border-color:rgba(124,90,245,0.5)}
+.price-badge{display:inline-block;background:rgba(79,142,247,0.15);color:var(--yl-accent);font-size:0.72rem;font-weight:600;letter-spacing:0.06em;padding:0.3rem 0.7rem;border-radius:100px;margin-bottom:1rem}
+.price-badge.purple{background:rgba(124,90,245,0.15);color:#a78bfa}
+.price-plan{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.5rem}
+.price-amount{font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;line-height:1;margin-bottom:0.3rem}
+.price-amount.small{font-size:1.4rem}
+.price-desc{font-size:0.84rem;color:var(--yl-muted);line-height:1.6;margin-top:0.8rem;padding-top:0.8rem;border-top:0.5px solid var(--yl-border);font-weight:300}
+.price-features{margin-top:1.2rem;list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.price-features li{font-size:0.84rem;color:var(--yl-muted);display:flex;align-items:center;gap:0.5rem}
+.price-features li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--yl-accent);flex-shrink:0}
+.price-features li.purple-dot::before{background:#a78bfa}
+.price-click-hint{font-size:0.75rem;color:var(--yl-accent);margin-top:1.2rem;display:flex;align-items:center;gap:0.4rem;opacity:0.7}
+.price-click-hint.purple{color:#a78bfa}
+
+.modal-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s ease;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);padding:2rem;overflow-y:auto}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-3d-wrap{perspective:1200px;width:min(640px,92vw);margin:auto}
+.modal-card{
+  background:var(--yl-card);
+  border-radius:20px;
+  padding:2.5rem;
+  border:0.5px solid var(--yl-border);
+  transform:rotateX(18deg) rotateY(-8deg) scale(0.85);
+  transform-style:preserve-3d;
+  transition:transform 0.55s cubic-bezier(0.34,1.56,0.64,1),opacity 0.4s;
+  opacity:0;
+  box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 0.5px rgba(255,255,255,0.06);
+  position:relative;
+}
+.modal-overlay.open .modal-card{transform:rotateX(0deg) rotateY(0deg) scale(1);opacity:1}
+.modal-card-glow{position:absolute;inset:0;border-radius:20px;background:radial-gradient(ellipse 60% 40% at 30% 20%,rgba(79,142,247,0.07),transparent 70%);pointer-events:none}
+.modal-card-glow.purple{background:radial-gradient(ellipse 60% 40% at 30% 20%,rgba(124,90,245,0.07),transparent 70%)}
+.modal-close{position:absolute;top:1.2rem;right:1.2rem;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:0.5px solid var(--yl-border);display:flex;align-items:center;justify-content:center;cursor:none;transition:background 0.2s;color:var(--yl-text);font-size:1.1rem;line-height:1;z-index:10;pointer-events:all}
+.modal-close:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.3)}
+.modal-tag{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--yl-accent);margin-bottom:0.8rem}
+.modal-tag.purple{color:#a78bfa}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;margin-bottom:0.5rem}
+.modal-price{font-family:'Syne',sans-serif;font-weight:800;font-size:2.8rem;color:var(--yl-accent);line-height:1;margin-bottom:1.5rem}
+.modal-price.purple{color:#a78bfa}
+.modal-price.small{font-size:1.8rem}
+.modal-section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--yl-muted);margin-bottom:0.6rem;margin-top:1.2rem}
+.modal-features{list-style:none;display:flex;flex-direction:column;gap:0.55rem}
+.modal-features li{font-size:0.9rem;color:var(--yl-text);display:flex;align-items:flex-start;gap:0.6rem;line-height:1.5}
+.modal-features li::before{content:'✓';color:var(--yl-accent);font-weight:700;flex-shrink:0;margin-top:1px}
+.modal-features li.purple::before{color:#a78bfa}
+.modal-divider{height:0.5px;background:var(--yl-border);margin:1.2rem 0}
+.modal-cta{display:inline-flex;align-items:center;gap:0.5rem;background:var(--yl-accent);color:#fff;border:none;padding:0.85rem 1.8rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:none;margin-top:1.5rem;text-decoration:none;transition:opacity 0.2s;pointer-events:all;z-index:10;position:relative}
+.modal-cta:hover{opacity:0.85}
+.modal-cta.purple{background:#7c5af5}
+.modal-esc-hint{font-size:0.75rem;color:var(--yl-muted);margin-top:0.8rem;text-align:center;letter-spacing:0.04em}
+
+/* =====================================================
+   FEEDBACK / TESTIMONIALS — cursor-highlight blocks
+   ===================================================== */
+.feedback-section{padding:5rem 2rem;background:var(--yl-dark)}
+.feedback-inner{max-width:1100px;margin:0 auto}
+.feedback-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.feedback-card{
+  background:var(--yl-surface);
+  border:0.5px solid var(--yl-border);
+  border-radius:16px;padding:1.8rem;
+  position:relative;overflow:hidden;
+  transition:border-color 0.35s, background 0.35s;
+  cursor:none;
+}
+/* Cursor spotlight per card */
+.feedback-card::before{
+  content:'';
+  position:absolute;
+  width:280px;height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(79,142,247,0.12) 0%,transparent 70%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.3s;
+  transform:translate(-50%,-50%);
+  left:50%;top:50%;
+  z-index:0;
+}
+.feedback-card:hover{border-color:rgba(79,142,247,0.35);background:var(--yl-card)}
+.feedback-card:hover::before{opacity:1}
+.feedback-card>*{position:relative;z-index:1}
+.feedback-stars{display:flex;gap:3px;margin-bottom:1rem}
+.feedback-stars span{color:var(--yl-accent);font-size:0.9rem}
+.feedback-text{font-size:0.9rem;color:var(--yl-text);line-height:1.7;font-weight:300;margin-bottom:1.4rem;font-style:italic}
+.feedback-author{display:flex;align-items:center;gap:0.75rem}
+.feedback-avatar{width:36px;height:36px;border-radius:50%;background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;color:var(--yl-accent);flex-shrink:0}
+.feedback-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--yl-text)}
+.feedback-biz{font-size:0.78rem;color:var(--yl-muted);margin-top:0.1rem}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:3rem}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem}
+.contact-item{display:flex;align-items:flex-start;gap:1rem}
+.contact-item-icon{width:38px;height:38px;border-radius:10px;background:var(--yl-surface);border:0.5px solid var(--yl-border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-item-icon svg{width:18px;height:18px;stroke:var(--yl-accent);fill:none;stroke-width:1.6}
+.contact-item-label{font-size:0.75rem;color:var(--yl-muted);margin-bottom:0.2rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:500}
+.contact-item-val{font-size:0.95rem}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:0.4rem}
+.form-group label{font-size:0.78rem;color:var(--yl-muted);font-weight:500;letter-spacing:0.04em}
+.form-group input,.form-group select,.form-group textarea{background:var(--yl-surface);border:0.5px solid var(--yl-border);border-radius:8px;padding:0.7rem 1rem;color:var(--yl-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;width:100%;cursor:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(79,142,247,0.5)}
+.form-group select option{background:#16161f;color:#f0f0f5}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-submit{background:var(--yl-accent);color:#fff;border:none;padding:0.8rem 2rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:none;transition:opacity 0.2s;align-self:flex-start}
+.form-submit:hover{opacity:0.85}
+
+/* FOOTER */
+footer{padding:2rem;border-top:0.5px solid var(--yl-border)}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--yl-muted)}
+.footer-logo span{color:var(--yl-accent)}
+.footer-copy{font-size:0.78rem;color:var(--yl-muted)}
+
+/* SCROLL ANIMATIONS */
+.animate-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.animate-in.visible{opacity:1;transform:none}
+.delay-1{transition-delay:0.15s}
+
+@media(max-width:900px){
+  .hero-card{flex-direction:column;height:auto}
+  .hero-right{min-height:300px;flex:none}
+  .cards-section-inner{grid-template-columns:1fr}
+  .display-cards-wrapper{display:none}
+  .services-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .feedback-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .footer-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-glow"></div>
+
+<nav>
+  <a href="#home" class="nav-logo">YL<span>.</span>Developers</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start Project</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-spotlight" id="hero-spotlight"></div>
+  <div class="hero-card">
+    <div class="hero-left animate-in">
+      <div class="hero-badge">Bengaluru Web Studio</div>
+      <h1>We build websites that win trust.</h1>
+      <p class="hero-sub">YL Developers creates polished, modern websites for local businesses. Direct owner support. Transparent pricing. Fast delivery.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Send Your Requirement ↗</a>
+        <a href="assets/yl-developers-contract.pdf" class="btn-ghost" download>Download Contract</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num">₹8K–15K</span><span class="stat-label">Transparent pricing</span></div>
+        <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Free revisions</span></div>
+        <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Owner support</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="spline-loader" id="spline-loader">
+        <div class="loader-ring"></div>
+        Loading 3D scene...
+      </div>
+      <spline-viewer
+        url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+        id="spline-el"
+        style="opacity:0;transition:opacity 0.8s ease;"
+      ></spline-viewer>
+      <!-- Overlay to hide "Built with Spline" watermark -->
+      <div class="spline-watermark-hider"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DISPLAY CARDS — looping carousel -->
+<div class="cards-section" id="about">
+  <div class="cards-section-inner">
+    <div class="cards-section-text animate-in">
+      <span class="section-tag">Our packages</span>
+      <h2>Three ways we can build for you.</h2>
+      <p>From a clean starter presence to a fully custom premium site — watch each tier cycle automatically.</p>
+      <div class="cards-dots">
+        <div class="cards-dot active" id="dot-0"></div>
+        <div class="cards-dot" id="dot-1"></div>
+        <div class="cards-dot" id="dot-2"></div>
+      </div>
+    </div>
+
+    <div class="display-cards-wrapper" id="dc-wrapper">
+      <!-- Card 3 (back by default) — Additional Fees -->
+      <div class="dc dc-3 state-back" id="dc-c">
+        <div>
+          <span class="dc-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </span>
+          <p class="dc-title">Additional Fees</p>
+        </div>
+        <p class="dc-desc">Extra revisions · ₹500 per round</p>
+        <p class="dc-date">After 3 free rounds included</p>
+      </div>
+      <!-- Card 2 (middle by default) — Premium Website -->
+      <div class="dc dc-2 state-mid" id="dc-b">
+        <div>
+          <span class="dc-icon-wrap">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </span>
+          <p class="dc-title">Premium Website</p>
+        </div>
+        <p class="dc-desc">Elevated design · Custom sections</p>
+        <p class="dc-date">From ₹15,000 · 10–14 days</p>
+      </div>
+      <!-- Card 1 (front by default) — Starter Website -->
+      <div class="dc dc-1 state-front" id="dc-a">
+        <div>
+          <span class="dc-icon-wrap">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </span>
+          <p class="dc-title">Starter Website</p>
+        </div>
+        <p class="dc-desc">Professional design · Mobile-friendly</p>
+        <p class="dc-date">From ₹8,000 · 5–7 days delivery</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="animate-in">
+      <span class="section-tag">What we do</span>
+      <h2 class="section-heading">Website solutions shaped around your customers.</h2>
+      <p class="section-sub">Every project starts with understanding your business — then we build a site that converts visitors into enquiries.</p>
+    </div>
+    <div class="services-grid animate-in delay-1">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="service-title">Business Website Design</div>
+        <p class="service-desc">Clean, modern websites that make your business look credible and professional from the first click.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="service-title">Direct Owner Communication</div>
+        <p class="service-desc">No middlemen. You talk directly to the people building your site — fast replies, clear updates throughout.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="service-title">Transparent Process</div>
+        <p class="service-desc">Written contract, fixed pricing, defined revision rounds. No surprises at the end of the project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="animate-in">
+      <span class="section-tag">Pricing</span>
+      <h2 class="section-heading">Simple packages. No hidden costs.</h2>
+      <p class="section-sub">Final pricing depends on content and layout complexity. Click any card for full details.</p>
+    </div>
+    <div class="pricing-grid animate-in delay-1">
+
+      <!-- Starter -->
+      <div class="price-card" onclick="openModal('starter')">
+        <div class="price-plan">Starter Website</div>
+        <div class="price-amount">₹8,000</div>
+        <ul class="price-features">
+          <li>Up to 4 pages</li><li>Mobile responsive design</li><li>Contact form</li>
+          <li>3 free revision rounds</li><li>5–7 day delivery</li>
+        </ul>
+        <p class="price-desc">Best for businesses that want a clean, professional online presence at an honest price.</p>
+        <p class="price-click-hint">↗ Click for full details</p>
+      </div>
+
+      <!-- Premium -->
+      <div class="price-card featured" onclick="openModal('premium')">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-plan">Premium Website</div>
+        <div class="price-amount">₹15,000</div>
+        <ul class="price-features">
+          <li>Up to 8 pages</li><li>Elevated design direction</li><li>Custom sections</li>
+          <li>3 free revision rounds</li><li>10–14 day delivery</li>
+        </ul>
+        <p class="price-desc">For brands that want a more tailored, premium presentation for their services and products.</p>
+        <p class="price-click-hint">↗ Click for full details</p>
+      </div>
+
+      <!-- Services & Revisions -->
+      <div class="price-card services-card" onclick="openModal('services')">
+        <div class="price-badge purple">Add-ons</div>
+        <div class="price-plan">Services & Revisions</div>
+        <div class="price-amount small">₹500 / round</div>
+        <ul class="price-features">
+          <li class="purple-dot">3 free rounds included</li>
+          <li class="purple-dot">Extra rounds at ₹500 each</li>
+          <li class="purple-dot">Logo design (on request)</li>
+          <li class="purple-dot">Domain & hosting guidance</li>
+          <li class="purple-dot">Content writing (on request)</li>
+        </ul>
+        <p class="price-desc">All packages include 3 revision rounds. Additional services available at transparent rates.</p>
+        <p class="price-click-hint purple">↗ Click for full details</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 3D MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-3d-wrap">
+    <div class="modal-card" id="modal-card">
+      <div class="modal-card-glow" id="modal-glow"></div>
+      <button class="modal-close" onclick="closeModalDirect()" title="Close">✕</button>
+      <div id="modal-content"></div>
+      <p class="modal-esc-hint">Press Esc or click outside to close</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FEEDBACK / TESTIMONIALS -->
+<div class="feedback-section" id="feedback">
+  <div class="feedback-inner">
+    <div class="animate-in">
+      <span class="section-tag">Customer Feedback</span>
+      <h2 class="section-heading">What our clients say.</h2>
+      <p class="section-sub">Real feedback from local businesses we've worked with across Bengaluru.</p>
+    </div>
+    <div class="feedback-grid animate-in delay-1">
+
+      <div class="feedback-card" id="fb1">
+        <div class="feedback-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="feedback-text">"YL Developers built our salon website in just 6 days. The design looks premium and our customers keep complimenting it. Highly recommended."</p>
+        <div class="feedback-author">
+          <div class="feedback-avatar">PR</div>
+          <div>
+            <p class="feedback-name">Priya Rajan</p>
+            <p class="feedback-biz">Glow Salon, Rajajinagar</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-card" id="fb2">
+        <div class="feedback-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="feedback-text">"Very professional team. They explained every step clearly, delivered on time, and the revision process was smooth. Our enquiries have doubled since launch."</p>
+        <div class="feedback-author">
+          <div class="feedback-avatar">MK</div>
+          <div>
+            <p class="feedback-name">Mohammed Khalid</p>
+            <p class="feedback-biz">Khalid Auto Works, Yeshwanthpur</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-card" id="fb3">
+        <div class="feedback-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="feedback-text">"Affordable pricing and excellent quality. The contract gave us confidence before we started. The website looks exactly how we imagined it."</p>
+        <div class="feedback-author">
+          <div class="feedback-avatar">SN</div>
+          <div>
+            <p class="feedback-name">Sunita Nair</p>
+            <p class="feedback-biz">Nair Tiffin Services, Vijayanagar</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTRACT -->
+<section id="contract">
+  <div class="section-inner animate-in">
+    <span class="section-tag">Contract</span>
+    <h2 class="section-heading">Share the agreement before we start.</h2>
+    <p class="section-sub">Download the YL Developers service contract directly. Transparent process — you review before committing.</p>
+    <div style="margin-top:2rem">
+      <a href="assets/yl-developers-contract.pdf" class="btn-primary" download>Download PDF Contract ↓</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="animate-in">
+      <span class="section-tag">Get in touch</span>
+      <h2 class="section-heading">Send your requirement directly.</h2>
+    </div>
+    <div class="contact-wrap animate-in delay-1">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.128.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9A16 16 0 0 0 15 16.09l1.12-.93a2 2 0 0 1 2.11-.45c.907.339 1.85.572 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <p class="contact-item-label">Phone</p>
+            <p class="contact-item-val"><a href="tel:+918317408123" style="color:var(--yl-text);text-decoration:none">8317408123</a> / <a href="tel:+918317410521" style="color:var(--yl-text);text-decoration:none">8317410521</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <p class="contact-item-label">Email</p>
+            <p class="contact-item-val"><a href="mailto:yldevelopers7@gmail.com" style="color:var(--yl-text);text-decoration:none">yldevelopers7@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <p class="contact-item-label">Address</p>
+            <p class="contact-item-val">2nd Cross Herohalli, Andrahalli Main Road, Bengaluru 560091</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" action="https://formsubmit.co/yldevelopers7@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Website Enquiry - YL Developers">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://yldevelopers-alt.github.io/YL-Developers/thanks.html">
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Full name" required></div>
+          <div class="form-group"><label>Business Name</label><input type="text" name="business_name" placeholder="Your business" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="you@example.com" required></div>
+          <div class="form-group"><label>Phone</label><input type="tel" name="phone" placeholder="10-digit number" required></div>
+        </div>
+        <div class="form-group">
+          <label>Website Type</label>
+          <select name="website_type">
+            <option>Business Website</option><option>Portfolio Website</option>
+            <option>Landing Page</option><option>E-commerce Website</option><option>Custom Website</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Budget Range</label>
+          <select name="budget">
+            <option>₹8,000</option><option>₹10,000</option>
+            <option>₹12,000</option><option>₹15,000</option><option>Custom / Discuss</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>About Your Requirement</label>
+          <textarea name="requirement" placeholder="Tell us about your business and what you need..."></textarea>
+        </div>
+        <button class="form-submit" type="submit">Submit Enquiry →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">YL<span>.</span>Developers</div>
+    <p class="footer-copy">© 2026 YL Developers · 2nd Cross Herohalli, Bengaluru 560091</p>
+  </div>
+</footer>
+
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+
+<script>
+/* ── Custom cursor ── */
+const dot = document.getElementById('cursor-dot');
+const glow = document.getElementById('cursor-glow');
+let mx=window.innerWidth/2, my=window.innerHeight/2, gx=mx, gy=my;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+(function ag(){ gx+=(mx-gx)*0.12; gy+=(my-gy)*0.12;
+  glow.style.left=gx+'px'; glow.style.top=gy+'px';
+  requestAnimationFrame(ag); })();
+
+/* Hero spotlight */
+const heroSpot=document.getElementById('hero-spotlight');
+const heroEl=document.querySelector('.hero');
+if(heroEl&&heroSpot){
+  heroEl.addEventListener('mousemove',e=>{
+    const r=heroEl.getBoundingClientRect();
+    heroSpot.style.transform=`translate(${e.clientX-r.left-300}px,${e.clientY-r.top-300}px)`;
+  });
+}
+
+/* Cursor scale on hover */
+document.querySelectorAll('a,button,.dc,.service-card,.price-card,.feedback-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.style.transform='translate(-50%,-50%) scale(2.5)';dot.style.opacity='0.6'});
+  el.addEventListener('mouseleave',()=>{dot.style.transform='translate(-50%,-50%) scale(1)';dot.style.opacity='1'});
+});
+/* Re-apply cursor tracking to dynamically added modal buttons */
+function rebindCursorToModal(){
+  document.querySelectorAll('.modal-close,.modal-cta').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{dot.style.transform='translate(-50%,-50%) scale(2.5)';dot.style.opacity='0.6'});
+    el.addEventListener('mouseleave',()=>{dot.style.transform='translate(-50%,-50%) scale(1)';dot.style.opacity='1'});
+  });
+}
+
+/* ── Feedback cards — per-card cursor spotlight ── */
+document.querySelectorAll('.feedback-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=e.clientX-r.left;
+    const y=e.clientY-r.top;
+    card.style.setProperty('--mx',x+'px');
+    card.style.setProperty('--my',y+'px');
+    card.querySelector('::before');
+    card.style.cssText+=`;--mx:${x}px;--my:${y}px`;
+    const before=card;
+    before.style.backgroundImage=`radial-gradient(280px circle at ${x}px ${y}px, rgba(79,142,247,0.08), transparent 70%)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.backgroundImage='none';
+  });
+});
+
+/* ── Spline watermark — aggressive JS removal ── */
+const splineEl=document.getElementById('spline-el');
+const loader=document.getElementById('spline-loader');
+function hideSplineLogo(){
+  if(!splineEl) return;
+  const sr=splineEl.shadowRoot;
+  if(sr){
+    const logo=sr.querySelector('#logo,a[href*="spline"],div[class*="logo"],canvas+div');
+    if(logo) logo.style.display='none';
+    const allLinks=sr.querySelectorAll('a');
+    allLinks.forEach(a=>{ if(a.href&&a.href.includes('spline')) a.style.display='none'; });
+  }
+}
+if(splineEl){
+  splineEl.addEventListener('load',()=>{
+    loader.style.display='none';
+    splineEl.style.opacity='1';
+    hideSplineLogo();
+    setTimeout(hideSplineLogo,500);
+    setTimeout(hideSplineLogo,1500);
+  });
+  setTimeout(()=>{ loader.style.display='none'; splineEl.style.opacity='1'; hideSplineLogo(); },5000);
+}
+
+/* ── 3D Modal system ── */
+const modalData={
+  starter:{
+    tag:'Starter Package',color:'blue',
+    title:'Starter Website',price:'₹8,000',
+    sections:[
+      {label:'What you get',items:['Up to 4 pages (Home, About, Services, Contact)','Mobile-responsive design — works on all screen sizes','Contact form so customers can reach you directly','Professional clean layout tailored to your business','WhatsApp integration on request']},
+      {label:'Process & Timeline',items:['50% payment upfront via UPI before work begins','Delivery within 5–7 working days','3 free revision rounds included','Additional revisions at ₹500 per round','Written contract before we start']},
+      {label:'What is NOT included',items:['Logo design (available separately)','Content writing / copywriting','Hosting and domain costs','Ongoing maintenance after delivery']}
+    ]
+  },
+  premium:{
+    tag:'Most Popular',color:'blue',
+    title:'Premium Website',price:'₹15,000',
+    sections:[
+      {label:'What you get',items:['Up to 8 pages with custom section layouts','Elevated premium design direction','Animated sections and interactive elements','Mobile-responsive on all devices','Contact form + WhatsApp integration','Basic SEO setup (meta tags, page titles)']},
+      {label:'Process & Timeline',items:['50% payment upfront via UPI before work begins','Delivery within 10–14 working days','3 free revision rounds included','Additional revisions at ₹500 per round','Written contract before we start']},
+      {label:'What is NOT included',items:['Logo design (available separately on request)','Content writing / copywriting','Hosting and domain costs','Ongoing maintenance after delivery']}
+    ]
+  },
+  services:{
+    tag:'Add-ons & Services',color:'purple',
+    title:'Services & Revisions',price:'₹500 / extra round',
+    sections:[
+      {label:'Revision Policy',items:['Every package includes 3 free revision rounds','A revision = small content/design changes to existing pages','Adding new pages or full redesign counts as a new project','Extra revision rounds billed at ₹500 each','Revisions responded to within 24–48 hours']},
+      {label:'Additional Services',items:['Logo design — pricing on discussion','Content writing / copywriting — pricing on discussion','Domain registration guidance (free advice)','Hosting setup support (free advice)','Google Business Profile setup — pricing on discussion']},
+      {label:'How payments work',items:['50% upfront via UPI before work starts','Remaining 50% on final delivery','Extra revisions billed after each round','All pricing agreed in writing before work begins']}
+    ]
+  }
+};
+
+function openModal(type){
+  const data=modalData[type];
+  const isPurple=data.color==='purple';
+  const ac=isPurple?'#a78bfa':'#4f8ef7';
+  let html=`
+    <div class="modal-tag${isPurple?' purple':''}">${data.tag}</div>
+    <div class="modal-title">${data.title}</div>
+    <div class="modal-price${isPurple?' purple':''}${data.price.length>8?' small':''}">${data.price}</div>
+  `;
+  data.sections.forEach((sec,i)=>{
+    if(i>0) html+=`<div class="modal-divider"></div>`;
+    html+=`<div class="modal-section-title">${sec.label}</div><ul class="modal-features">`;
+    sec.items.forEach(item=>{
+      html+=`<li${isPurple?' class="purple"':''}>${item}</li>`;
+    });
+    html+=`</ul>`;
+  });
+  html+=`<a href="#contact" class="modal-cta${isPurple?' purple':''}" onclick="closeModalDirect()">Start This Project ↗</a>`;
+  document.getElementById('modal-content').innerHTML=html;
+  document.getElementById('modal-glow').className='modal-card-glow'+(isPurple?' purple':'');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  rebindCursorToModal();
+}
+function closeModal(e){
+  if(e.target===document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModalDirect(); });
+
+/* ── DisplayCards auto-loop ── */
+const cards=[
+  document.getElementById('dc-a'), // Starter — starts front
+  document.getElementById('dc-b'), // Premium — starts mid
+  document.getElementById('dc-c')  // Fees    — starts back
+];
+const dots=[
+  document.getElementById('dot-0'),
+  document.getElementById('dot-1'),
+  document.getElementById('dot-2')
+];
+const states=['state-front','state-mid','state-back'];
+let currentState=0;
+
+function setCardStates(frontIdx){
+  const midIdx=(frontIdx+1)%3;
+  const backIdx=(frontIdx+2)%3;
+  cards.forEach(c=>c.classList.remove('state-front','state-mid','state-back'));
+  dots.forEach(d=>d.classList.remove('active'));
+  cards[frontIdx].classList.add('state-front');
+  cards[midIdx].classList.add('state-mid');
+  cards[backIdx].classList.add('state-back');
+  dots[frontIdx].classList.add('active');
+}
+
+setCardStates(0);
+setInterval(()=>{
+  currentState=(currentState+1)%3;
+  setCardStates(currentState);
+},2800);
+
+/* Dots clickable */
+dots.forEach((d,i)=>d.addEventListener('click',()=>{ currentState=i; setCardStates(i); }));
+
+/* ── Scroll animations ── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.animate-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
